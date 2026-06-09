@@ -1,21 +1,29 @@
-import { Button } from "@/components/ui/button"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Header from "./pages/auth/Header";
+import Footer from "./pages/auth/Footer";
+import Login from "./pages/auth/Login";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 
 export function App() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+    <BrowserRouter>
+      {/* 1. 'flex flex-col min-h-screen' makes the container fill the screen
+         2. 'pt-[80px]' (or height of your header) prevents content overlap 
+      */}
+      <div className="flex flex-col min-h-screen bg-[#f9f9ff] pt-[80px]">
+        <Header />
+        
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+          </Routes>
+        </main>
+        
+        <Footer />
       </div>
-    </div>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
