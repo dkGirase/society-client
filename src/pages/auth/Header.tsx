@@ -1,3 +1,4 @@
+import { WEB_NAME } from '@/lib/constants';
 import React from 'react';
 
 export default function Header() {
@@ -8,7 +9,7 @@ export default function Header() {
         
         {/* Logo/Brand - Now pinned to the left */}
         <div className="text-xl font-bold text-[#4F46E5]">
-          Digital Society Platform
+          {WEB_NAME}
         </div>
 
       </div>
