@@ -1,34 +1,32 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Header from "./pages/auth/Header";
-import Footer from "./pages/auth/Footer";
-import Login from "./pages/auth/Login";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import ResetPassword from "./pages/auth/ResetPassword";
-import Sidebar from "./comman/Sidebar";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Layout from "./comman/Layout"
+import Login from "./pages/auth/Login"
+import ForgotPassword from "./pages/auth/ForgotPassword"
+import ResetPassword from "./pages/auth/ResetPassword"
+import SuperAdminDashboard from "./components/superAdmin/SuperAdminDashboard"
+import SocietiesPage from "./components/superAdmin/Society/SocietiesPage"
+import SocietyDetails from "./components/superAdmin/Society/SocietyDetails"
+import SocietyAdminsPage from "./components/superAdmin/SocietyAdmin/SocietyAdminsPage"
 
-export function App() {
+export default function App() {
   return (
     <BrowserRouter>
-      {/* 1. 'flex flex-col min-h-screen' makes the container fill the screen
-         2. 'pt-[80px]' (or height of your header) prevents content overlap 
-      */}
-      <div className="flex flex-col min-h-screen bg-[#f9f9ff] pt-[80px]">
-        {/* <Header /> */}
-        
-        <main className="flex-grow">
-          <Routes>
-            {/* <Route path="/" element={<Login />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ResetPassword />} /> */}
-
-            <Route path="/" element={<Sidebar />} />
-          </Routes>
-        </main>
-        
-        {/* <Footer /> */}
-      </div>
+      <Routes>
+        {/* Auth */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        {/* Admin */}
+        <Route path="/" element={<Layout />}>
+          <Route index element={<SuperAdminDashboard />} />
+          <Route path="societies" element={<SocietiesPage />} />
+          <Route path="societies/:id" element={<SocietyDetails />} />
+          <Route path="financials" element={<h1>Financials</h1>} />
+          <Route path="society-admins" element={<SocietyAdminsPage />} />
+          <Route path="support" element={<h1>Support</h1>} />
+          <Route path="logs" element={<h1>Logs</h1>} />
+        </Route>
+      </Routes>
     </BrowserRouter>
-  );
+  )
 }
-
-export default App;
