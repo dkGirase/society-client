@@ -18,11 +18,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { StatusBadge } from "@/comman/StatusBadge"
 import { Card, CardContent } from "@/components/ui/card"
+import { useNavigate } from "react-router-dom"
 
 type MenuId = string | null
 
 export default function SocietyAdminsPage() {
   const [openMenu, setOpenMenu] = useState<MenuId>(null)
+  const navigate = useNavigate()
 
   const toggleMenu = (id: string) => setOpenMenu(openMenu === id ? null : id)
 
@@ -178,7 +180,7 @@ export default function SocietyAdminsPage() {
                   </td>
 
                   <td className="p-4">
-                    <div className="flex cursor-pointer items-center gap-1 text-sm text-indigo-600 hover:underline">
+                    <div onClick={() => navigate(`/societies/:id`)} className="flex cursor-pointer items-center gap-1 text-sm text-indigo-600 hover:underline">
                       {a.society}
                       <ExternalLink className="h-4 w-4 text-slate-700" />
                     </div>

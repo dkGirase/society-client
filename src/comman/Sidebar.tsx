@@ -13,42 +13,8 @@ import {
   Users,
   UserStar,
 } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
-
-interface NavItem {
-  label: string
-  href: string
-  icon: React.ElementType
-}
-
-const navItems: NavItem[] = [
-  {
-    label: "Dashboard",
-    href: "/",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Societies",
-    href: "/societies",
-    icon: Building2,
-  },
-  {
-    label: "Society Admins",
-    href: "/society-admins",
-    icon: UserStar,
-  },
-  {
-    label: "Support",
-    href: "/support",
-    icon: CircleHelp,
-  },
-  {
-    label: "Logs",
-    href: "/logs",
-    icon: History,
-  },
-]
+import { navItems } from "@/lib/nav-items"
 
 interface SidebarProps {
   collapsed: boolean

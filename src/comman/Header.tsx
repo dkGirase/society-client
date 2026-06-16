@@ -2,23 +2,81 @@ import * as React from "react"
 import { Bell, Search, Settings } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Menu } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Link, useLocation } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { navItems } from "@/lib/nav-items"
+import { WEB_NAME } from "@/lib/constants"
 
 interface HeaderProps {
   collapsed: boolean
 }
 
 export default function Header({ collapsed }: HeaderProps) {
+  const location = useLocation()
   return (
     <header
-      className={`top-0 z-40 flex h-16 w-full *:sticky ${
+      className={`*:sticky ${
         collapsed ? "left-20" : "left-[280px]"
-      } items-center justify-end border-b border-slate-200 bg-white px-4 shadow-sm lg:px-6 dark:border-slate-800 dark:bg-slate-900`}
+      } sticky top-0 z-40 flex h-16 items-center justify-end border-b bg-white px-4 shadow-sm lg:px-6`}
     >
-      {/* Search */}
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="mr-auto cursor-pointer md:hidden"
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+        </SheetTrigger>
 
-      {/* Right Side */}
+        <SheetContent side="left" className="w-[280px] p-0">
+          <div className="flex h-full flex-col bg-white">
+            {/* Logo */}
+
+            <div className="border-b p-6">
+              <h2 className="text-xl font-black text-indigo-600">{WEB_NAME}</h2>
+
+              <p className="text-sm text-slate-500">Super Admin Console</p>
+            </div>
+
+            {/* Navigation */}
+
+            <nav className="flex flex-1 flex-col gap-2 p-4">
+              {navItems.map((item) => {
+                const Icon = item.icon
+                const active = location.pathname === item.href
+
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className={`flex items-center gap-4 rounded-lg px-4 py-3 transition-all ${
+                      active
+                        ? "bg-indigo-50 font-bold text-indigo-600"
+                        : "text-slate-700 hover:bg-slate-100 hover:text-indigo-600"
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+
+                    <span>{item.label}</span>
+                  </Link>
+                )
+              })}
+            </nav>
+
+            {/* Bottom */}
+
+            <div className="border-t p-4">
+              <Button className="h-12 w-full cursor-pointer rounded-xl bg-indigo-600 hover:bg-indigo-500">
+                Manage All
+              </Button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
 
       <div className="flex items-center gap-6">
         {/* Icons */}
