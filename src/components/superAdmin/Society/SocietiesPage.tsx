@@ -211,7 +211,6 @@ export default function SocietiesPage() {
                 <tr
                   key={society.id}
                   className="group border-b transition-all hover:bg-slate-50"
-                  onClick={() => navigate(`/societies/${society.id}`)}
                 >
                   {/* Society */}
 
@@ -287,8 +286,9 @@ export default function SocietiesPage() {
                         variant="ghost"
                         size="icon"
                         className="cursor-pointer rounded-lg hover:bg-indigo-50 hover:text-indigo-600"
+                        onClick={() => navigate(`/societies/${society.id}`)}
                       >
-                        <Eye className="h-5 w-5 text-slate-700" />
+                        <Eye  className="h-5 w-5 text-slate-700" />
                       </Button>
 
                       {/* Dropdown */}

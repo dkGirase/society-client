@@ -10,25 +10,11 @@ import {
   ExternalLink,
   Mail,
   Phone,
-  UserPlus,
-  LogIn,
-  TriangleAlert,
-  PartyPopper,
   ArrowLeft,
 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-
-const visitorTrend = [
-  { day: "Mon", height: "40%", visitors: 12 },
-  { day: "Tue", height: "65%", visitors: 24 },
-  { day: "Wed", height: "55%", visitors: 18 },
-  { day: "Thu", height: "90%", visitors: 32 },
-  { day: "Fri", height: "70%", visitors: 28 },
-  { day: "Sat", height: "100%", visitors: 45 },
-  { day: "Sun", height: "85%", visitors: 38 },
-]
 
 const societyAdmin = {
   name: "Rajesh Khanna",
@@ -37,41 +23,6 @@ const societyAdmin = {
   phone: "+91 98765 43210",
   image: "https://i.pravatar.cc/200?img=12",
 }
-
-const recentActivities = [
-  {
-    id: 1,
-    icon: UserPlus,
-    color: "blue",
-    title: "New tenant moved in",
-    description: "at Block B, Flat 402.",
-    time: "2 hours ago",
-  },
-  {
-    id: 2,
-    icon: LogIn,
-    color: "green",
-    title: "Visitor entry logged:",
-    description: "Delivery person for Flat 105.",
-    time: "4 hours ago",
-  },
-  {
-    id: 3,
-    icon: TriangleAlert,
-    color: "amber",
-    title: "Maintenance Alert:",
-    description: "Elevator 2 undergoing inspection.",
-    time: "6 hours ago",
-  },
-  {
-    id: 4,
-    icon: PartyPopper,
-    color: "purple",
-    title: "Facility Booking:",
-    description: "Clubhouse booked for Saturday event.",
-    time: "Yesterday",
-  },
-]
 
 const society = {
   name: "Green Valley Residency",
@@ -92,32 +43,8 @@ const society = {
 export default function SocietyDetails() {
   const navigate = useNavigate()
 
-  const handleShare = () => {
-    console.log("Share Society")
-  }
-
-  const handleEditSociety = () => {
-    console.log("Edit Society")
-  }
-
-  const handleChangeAdmin = () => {
-    console.log("Change Admin")
-  }
-
-  const handleViewActivities = () => {
-    console.log("View Activities")
-  }
-
-  const handleViewMap = () => {
-    window.open("https://maps.google.com/?q=Sector+45+Gurgaon", "_blank")
-  }
-
-  const handleVisitorMenu = () => {
-    console.log("Visitor Menu")
-  }
-
   return (
-  <section className="space-y-6 -mt-4 px-6 pb-6 pt-0 md:-mt-6 md:px-8 md:pb-8">
+    <section className="-mt-4 space-y-6 px-6 pt-0 pb-6 md:-mt-6 md:px-8 md:pb-8">
       {/* Back Button */}
 
       <div className="flex items-center">
@@ -127,7 +54,6 @@ export default function SocietyDetails() {
           className="cursor-pointer gap-2 rounded-lg px-0 text-slate-600 hover:bg-transparent hover:text-indigo-600"
         >
           <ArrowLeft className="h-5 w-5 text-slate-700" />
-         
         </Button>
       </div>
       {/* Header */}
@@ -209,7 +135,10 @@ export default function SocietyDetails() {
 
         {/* Owners */}
 
-        <Card className="cursor-pointer rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <Card
+          onClick={() => navigate("/owners")}
+          className="cursor-pointer rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+        >
           <CardContent className="flex flex-col gap-4 p-6">
             <div className="flex items-center justify-between">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
@@ -231,7 +160,7 @@ export default function SocietyDetails() {
 
         {/* Tenants */}
 
-        <Card className="cursor-pointer rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <Card onClick={() => navigate("/tenants")} className="cursor-pointer rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
           <CardContent className="flex flex-col gap-4 p-6">
             <div className="flex items-center justify-between">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-cyan-100">

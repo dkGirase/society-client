@@ -1,2 +1,2 @@
 Use Technology: React.ts, ShadCN Componants, tailwind CSS, Lucid react for icon if needed, use React Router if needed, , alos on clickable componants add "cursor-pointer" ,alos match effect , alignment like hight ,width, margin, padding , border , spacing etc things shoud be same to same according above given code , icon color is slate-700 and size h-5, w-5, page should be respopnsive, and while writimg use single line css not multiple
-Color pallet: Indigo (#4F46E5) , Blue (#3B82F6) , Cyan (#06B6D4)
+Color pallet: Indigo (#4F46E5) , Blue (#3B82F6) , Cyan (#06B6D4), and also while genrating code dont take unwanted extra space, and give code in prettier fromat
