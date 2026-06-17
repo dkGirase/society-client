@@ -72,14 +72,57 @@ const tenants: Tenant[] = [
   },
 ]
 
+export interface FormData {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  block: string
+  floor: string
+  flat: string
+  parking: string
+  emergencyContact: string
+  rentStart: string
+  rentEnd: string
+  idProofType: string
+  idProofNumber: string
+  document: File | null // or whatever type you are using for files
+}
+
 export default function TenantManagement() {
   const isExpired = (endDate: string) => {
     return new Date(endDate) < new Date()
   }
   const [open, setOpen] = useState(false)
+  const [selectedTenant, setSelectedTenant] = useState<FormData | null>(null)
   const [activeTab, setActiveTab] = useState("all")
   const navigate = useNavigate()
-  const [editDialogOpen, setEditDialogOpen] = useState(false)
+
+  const handleEdit = () => {
+    const mappedData: FormData = {
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      phone: "+1 (555) 000-0000",
+      block: "A",
+      floor: "1",
+      flat: "101",
+      parking: "P-12",
+      emergencyContact: "+1 (555) 999-9999",
+      rentStart: "2026-06-01",
+      rentEnd: "2027-06-01",
+      idProofType: "Passport",
+      idProofNumber: "A1234567",
+      document: null,
+    }
+
+    setSelectedTenant(mappedData) // Now setSelectedTenant state should be FormData | null
+    setOpen(true)
+  }
+  const handleAdd = () => {
+    setSelectedTenant(null) // Reset to null so it's a "fresh" form
+    setOpen(true)
+  }
 
   return (
     <div className="mt-4 space-y-6 px-6 pt-0 pb-6 md:-mt-6 md:px-8 md:pb-8">
@@ -102,7 +145,7 @@ export default function TenantManagement() {
         </div>
 
         <Button
-          onClick={() => setOpen(true)}
+          onClick={handleAdd}
           className="cursor-pointer gap-2 rounded-xl bg-[#4F46E5] px-6 py-6 text-white hover:bg-[#4338CA] active:scale-95"
         >
           <UserPlus className="h-5 w-5 text-white" />
@@ -270,7 +313,7 @@ export default function TenantManagement() {
                         size="icon"
                         variant="ghost"
                         className="h-9 w-9 cursor-pointer rounded-lg hover:bg-blue-50"
-                        onClick={() => setEditDialogOpen(true)}
+                        onClick={() => handleEdit()}
                       >
                         <Pencil className="h-5 w-5 text-slate-700" />
                       </Button>
@@ -379,7 +422,11 @@ export default function TenantManagement() {
             </div>
           </div>
         </div>
-        <AddTenantDialog open={open} setOpen={setOpen} />
+        <AddTenantDialog
+          open={open}
+          setOpen={setOpen}
+          initialData={selectedTenant || undefined}
+        />
       </Card>
     </div>
   )

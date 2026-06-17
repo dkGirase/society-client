@@ -5,20 +5,16 @@ import {
   Phone,
   BadgeCheck,
   Cake,
-  UserRoundSearch,
-  ClipboardCheck,
   Building2,
   ArrowLeft,
   AlertTriangle,
-  BarChart3,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { useState } from "react"
-import EditOwnerDialog from "./EditOwnerDialog"
+import AddTenantDialog from "./AddTenantDialog"
 
 const tenant = {
   id: "SP-7721-GRW",
@@ -50,8 +46,30 @@ const tenant = {
 }
 
 export default function TenantDetails() {
+  const [selectedTenant, setSelectedTenant] = useState<any>(null)
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const navigate = useNavigate()
+  const handleEdit = () => {
+    // You may need to map the 'tenant' object to match the FormData 
+    // structure expected by your AddTenantDialog
+    setSelectedTenant({
+      firstName: tenant.name.split(" ")[0],
+      lastName: tenant.name.split(" ")[1] || "",
+      email: tenant.email,
+      phone: tenant.phone,
+      block: tenant.block.replace("Tower ", ""),
+      floor: tenant.floor.replace("th Floor", ""),
+      flat: tenant.flat,
+      parking: "", // Add if available
+      emergencyContact: tenant.emergencyPhone,
+      rentStart: tenant.rentStart,
+      rentEnd: tenant.rentEnd,
+      idProofType: "", // Map if available
+      idProofNumber: "", // Map if available
+      document: null,
+    })
+    setEditDialogOpen(true)
+  }
 
   return (
     <div className="mt-4 space-y-6 px-6 pb-6 md:px-8 md:pb-8">
@@ -66,8 +84,8 @@ export default function TenantDetails() {
         </Button>
 
         <Button
-          onClick={() => setEditDialogOpen(true)}
-          className="rounded-xl bg-[#4F46E5] px-6 py-5 text-white hover:bg-[#4338CA]"
+          onClick={handleEdit}
+          className="rounded-xl bg-[#4F46E5] cursor-pointer px-6 py-5 text-white hover:bg-[#4338CA]"
         >
           <Pencil className="mr-2 h-5 w-5" /> Edit Details
         </Button>
@@ -195,8 +213,11 @@ export default function TenantDetails() {
           </Card>
         </div>
       </div>
-
-      <EditOwnerDialog open={editDialogOpen} onOpenChange={setEditDialogOpen} />
+      <AddTenantDialog
+        open={editDialogOpen}
+        setOpen={setEditDialogOpen}
+        initialData={selectedTenant || undefined}
+      />
     </div>
   )
 }
