@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { UserPlus, User, Building2, ClipboardCheck } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -19,12 +19,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Textarea } from "@/components/ui/textarea"
-
 interface AddTenantDialogProps {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  initialData?: FormData
 }
 
 type FormData = {
@@ -47,25 +45,54 @@ type FormData = {
 export default function AddTenantDialog({
   open,
   setOpen,
+  initialData,
 }: AddTenantDialogProps) {
   const [step, setStep] = useState(1)
 
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    block: "",
-    floor: "",
-    flat: "",
-    parking: "",
-    emergencyContact: "",
-    rentStart: "",
-    rentEnd: "",
-    idProofType: "",
-    idProofNumber: "",
-    document: null,
-  })
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData)
+    } else {
+      // Reset to empty when adding a new tenant
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        block: "",
+        floor: "",
+        flat: "",
+        parking: "",
+        emergencyContact: "",
+        rentStart: "",
+        rentEnd: "",
+        idProofType: "",
+        idProofNumber: "",
+        document: null,
+      })
+    }
+  }, [initialData, open])
+
+  const [formData, setFormData] = useState<FormData>(
+    initialData || {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      block: "",
+      floor: "",
+      flat: "",
+      parking: "",
+      emergencyContact: "",
+      rentStart: "",
+      rentEnd: "",
+      idProofType: "",
+      idProofNumber: "",
+      document: null,
+    }
+  )
+
+  const isEditMode = !!initialData
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -105,7 +132,7 @@ export default function AddTenantDialog({
 
           <DialogHeader className="mb-8 space-y-2 text-left">
             <DialogTitle className="text-3xl font-black text-slate-900">
-              Add New Tenant
+              {isEditMode ? "Edit Tenant" : "Add New Tenant"}
             </DialogTitle>
 
             <p className="text-sm text-slate-500">
@@ -344,8 +371,8 @@ export default function AddTenantDialog({
                     />
                   </div>
                 </div>
-                
-                 {/* Document Upload */}
+
+                {/* Document Upload */}
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-slate-600">
                     Upload Document <span className="text-red-500">*</span>
