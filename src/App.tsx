@@ -11,6 +11,7 @@ import OwnerManagement from "./comman/OwnersManagement"
 import OwnerDetails from "./comman/OwnerDetails"
 import TenantManagement from "./comman/TenantsManagement"
 import TenantDetails from "./comman/TenantDetails"
+import GuardManagement from "./comman/GuardManagement"
 
 export default function App() {
   return (
@@ -27,8 +28,9 @@ export default function App() {
           <Route path="societies/:id" element={<SocietyDetails />} />
           <Route path="owners" element={<OwnerManagement />} />
           <Route path="tenants" element={<TenantManagement />} />
+          <Route path="guards" element={<GuardManagement />} />
           <Route path="owners/:id" element={<OwnerDetails />} />
-           <Route path="tenants/:id" element={<TenantDetails />} />
+          <Route path="tenants/:id" element={<TenantDetails />} />
           <Route path="financials" element={<h1>Financials</h1>} />
           <Route path="society-admins" element={<SocietyAdminsPage />} />
           <Route path="support" element={<h1>Support</h1>} />

@@ -182,7 +182,7 @@ export default function SocietyDetails() {
 
         {/* Guards */}
 
-        <Card className="cursor-pointer rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <Card onClick={() => navigate("/guards")} className="cursor-pointer rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
           <CardContent className="flex flex-col gap-4 p-6">
             <div className="flex items-center justify-between">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
