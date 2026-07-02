@@ -14,114 +14,71 @@ import {
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { StatusBadge } from "./StatusBadge"
-import AddTenantDialog from "./AddTenantDialog"
+import AddGuardDialog from "./AddGuardDialog"
 
-interface Tenant {
+interface Guard {
   id: string
   name: string
-  ownerId: string
   avatar: string
-  flat: string
   email: string
   phone: string
+  getassignment: string
+  shift: string
+  timeing: string
   status: "ACTIVE" | "INACTIVE"
-  rentStart: string
-  rentEnd: string
 }
 
-const tenants: Tenant[] = [
+const guards: Guard[] = [
   {
     id: "1",
     name: "Julian Dasher",
-    ownerId: "#OWN-8821",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
-    flat: "A-104",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",  
     email: "julian.d@example.com",
     phone: "+1 (555) 012-3456",
+    getassignment: "Main Gate",
+    shift: "Morning",
+    timeing: "06:00 AM - 02:00 PM",
     status: "ACTIVE",
-    rentStart: "2026-01-12",
-    rentEnd: "2027-01-12",
   },
   {
     id: "2",
-    name: "Sarah Kinsley",
-    ownerId: "#OWN-4432",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
-    flat: "C-402",
-    email: "sarah.kinsley@webmail.com",
+    name: "Michael Ross",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
+    email: "michael.r@example.com",
     phone: "+1 (555) 987-6543",
+    getassignment: "Parking Area",
+    shift: "Evening",
+    timeing: "02:00 PM - 10:00 PM",
     status: "ACTIVE",
-    rentStart: "2026-01-12",
-    rentEnd: "2027-01-12",
   },
   {
     id: "3",
-    name: "Robert Miller",
-    ownerId: "#OWN-1092",
-    avatar:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200",
-    flat: "B-201",
-    email: "miller.robert@outlook.com",
-    phone: "+1 (555) 321-0987",
+    name: "David Smith",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
+    email: "david.s@example.com",
+    phone: "+1 (555) 456-7890",
+    getassignment: "Club House",
+    shift: "Night",
+    timeing: "10:00 PM - 06:00 AM",
     status: "INACTIVE",
-    rentStart: "2023-01-12",
-    rentEnd: "2024-01-12",
+  },
+  {
+    id: "4",
+    name: "Robert Johnson",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
+    email: "robert.j@example.com",
+    phone: "+1 (555) 321-9876",
+    getassignment: "Visitor Entry",
+    shift: "Morning",
+    timeing: "06:00 AM - 02:00 PM",
+    status: "ACTIVE",
   },
 ]
 
-export interface FormData {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  block: string
-  floor: string
-  flat: string
-  parking: string
-  emergencyContact: string
-  rentStart: string
-  rentEnd: string
-  idProofType: string
-  idProofNumber: string
-  document: File | null // or whatever type you are using for files
-}
-
-export default function TenantManagement() {
-  const isExpired = (endDate: string) => {
-    return new Date(endDate) < new Date()
-  }
-  const [open, setOpen] = useState(false)
-  const [selectedTenant, setSelectedTenant] = useState<FormData | null>(null)
+export default function GuardManagement() {
   const [activeTab, setActiveTab] = useState("all")
   const navigate = useNavigate()
-
-  const handleEdit = () => {
-    const mappedData: FormData = {
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      phone: "+1 (555) 000-0000",
-      block: "A",
-      floor: "1",
-      flat: "101",
-      parking: "P-12",
-      emergencyContact: "+1 (555) 999-9999",
-      rentStart: "2026-06-01",
-      rentEnd: "2027-06-01",
-      idProofType: "Passport",
-      idProofNumber: "A1234567",
-      document: null,
-    }
-
-    setSelectedTenant(mappedData) // Now setSelectedTenant state should be FormData | null
-    setOpen(true)
-  }
-  const handleAdd = () => {
-    setSelectedTenant(null) // Reset to null so it's a "fresh" form
-    setOpen(true)
-  }
+  const [open, setOpen] = useState(false)
 
   return (
     <div className="mt-4 space-y-6 px-6 pt-0 pb-6 md:-mt-6 md:px-8 md:pb-8">
@@ -139,17 +96,15 @@ export default function TenantManagement() {
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-            Tenant Management
+            Guard Management
           </h2>
         </div>
 
-        <Button
-          onClick={handleAdd}
-          className="cursor-pointer gap-2 rounded-xl bg-[#4F46E5] px-6 py-6 text-white hover:bg-[#4338CA] active:scale-95"
-        >
+        <Button onClick={() => setOpen(true)} className="cursor-pointer gap-2 rounded-xl bg-[#4F46E5] px-6 py-6 text-white hover:bg-[#4338CA] active:scale-95">
           <UserPlus className="h-5 w-5 text-white" />
-          Add New Tenant
+          Add New Guard
         </Button>
+         <AddGuardDialog open={open} setOpen={setOpen} />
       </div>
 
       {/* Filter Bar */}
@@ -164,7 +119,7 @@ export default function TenantManagement() {
                 : "text-slate-600 hover:bg-slate-100"
             }`}
           >
-            All Tenants
+            All Guards
           </button>
 
           <button
@@ -201,18 +156,19 @@ export default function TenantManagement() {
             <thead>
               <tr className="border-b bg-slate-100 text-xs font-semibold tracking-wider text-slate-500 uppercase">
                 <th className="px-6 py-4">Avatar / Name</th>
-                <th className="px-6 py-4">Flat Number</th>
                 <th className="px-6 py-4">Contact Details</th>
-                <th className="px-6 py-4">Rent Duration</th>
+                <th className="px-6 py-4">Gate Assignment</th>
+                <th className="px-6 py-4">Timeing</th>
+                <th className="px-6 py-4">Shift</th>
                 <th className="px-6 py-4">Status</th>
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
 
             <tbody className="divide-y divide-slate-200">
-              {tenants.map((tenant) => (
+              {guards.map((guard) => (
                 <tr
-                  key={tenant.id}
+                  key={guard.id}
                   className="group transition-colors hover:bg-slate-50"
                 >
                   {/* Avatar / Name */}
@@ -220,79 +176,47 @@ export default function TenantManagement() {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
                       <img
-                        src={tenant.avatar}
-                        alt={tenant.name}
-                        className="h-10 w-10 rounded-full object-cover ring-2 ring-slate-100"
+                        src={guard.avatar}
+                        alt={guard.name}
+                        className="h-9  w-9 rounded-full object-cover ring-2 ring-slate-100"
                       />
 
                       <div>
                         <p className="font-semibold text-slate-900">
-                          {tenant.name}
+                          {guard.name}
                         </p>
                       </div>
                     </div>
                   </td>
-
-                  {/* Flat */}
-
-                  <td className="px-6 py-4">
-                    <span className="inline-flex rounded-md border border-cyan-200 bg-cyan-50 px-3 py-1 text-sm font-medium text-cyan-700">
-                      {tenant.flat}
-                    </span>
-                  </td>
-
                   {/* Contact */}
 
                   <td className="px-6 py-4">
                     <div className="flex flex-col">
                       <span className="text-sm font-medium text-slate-800">
-                        {tenant.email}
+                        {guard.email}
                       </span>
 
                       <span className="text-sm text-slate-500">
-                        {tenant.phone}
+                        {guard.phone}
                       </span>
                     </div>
                   </td>
 
                   <td className="px-6 py-4">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-slate-800">
-                        {new Date(tenant.rentStart).toLocaleDateString(
-                          "en-US",
-                          {
-                            month: "short",
-                            day: "2-digit",
-                            year: "numeric",
-                          }
-                        )}{" "}
-                        -{" "}
-                        {new Date(tenant.rentEnd).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "2-digit",
-                          year: "numeric",
-                        })}
-                      </span>
-
-                      {isExpired(tenant.rentEnd) ? (
-                        <span className="text-xs font-semibold text-red-600">
-                          Rent Expired
-                        </span>
-                      ) : (
-                        <span className="text-xs font-medium text-green-600">
-                          Active Rent
-                        </span>
-                      )}
-                    </div>
+                    <span className="inline-flex rounded-md border border-cyan-200 bg-cyan-50 px-3 py-1 text-sm font-medium text-cyan-700">
+                      {guard.getassignment}
+                    </span>
                   </td>
+
+                  <td className="px-6 py-4">{guard.timeing}</td>
+                  <td className="px-6 py-4">{guard.shift}</td>
 
                   {/* Status */}
                   <td className="px-6 py-4">
-                    <StatusBadge status={tenant.status} />
+                    <StatusBadge status={guard.status} />
                   </td>
 
                   {/* Actions */}
-
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2 opacity-0 transition-all duration-200 group-hover:opacity-100">
                       {/* View */}
@@ -301,7 +225,7 @@ export default function TenantManagement() {
                         size="icon"
                         variant="ghost"
                         className="h-9 w-9 cursor-pointer rounded-lg hover:bg-slate-100"
-                        onClick={() => navigate(`/tenants/:id`)}
+                        onClick={() => navigate(`/guards/:id`)}
                       >
                         <Eye className="h-5 w-5 text-slate-700" />
                       </Button>
@@ -312,14 +236,13 @@ export default function TenantManagement() {
                         size="icon"
                         variant="ghost"
                         className="h-9 w-9 cursor-pointer rounded-lg hover:bg-blue-50"
-                        onClick={() => handleEdit()}
                       >
                         <Pencil className="h-5 w-5 text-slate-700" />
                       </Button>
 
                       {/* Active / Inactive */}
 
-                      {tenant.status === "ACTIVE" ? (
+                      {guard.status === "ACTIVE" ? (
                         <Button
                           size="icon"
                           variant="ghost"
@@ -421,11 +344,6 @@ export default function TenantManagement() {
             </div>
           </div>
         </div>
-        <AddTenantDialog
-          open={open}
-          setOpen={setOpen}
-          initialData={selectedTenant || undefined}
-        />
       </Card>
     </div>
   )
